@@ -47,6 +47,8 @@ def __init__(self):
 
     
 def getData():
+    import os
+    os.chdir('C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015')
     #Training Data 
     import pandas as pd
     titanic_data_v5 = pd.read_csv('Data/titanic_data_v5.csv')
