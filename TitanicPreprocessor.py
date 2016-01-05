@@ -3,8 +3,12 @@ import pandas as pd
 import numpy as np
 
 def __init__(self):
-    import os
-    os.chdir('C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015')
+    import socket
+    computer_name = socket.gethostname()
+    if computer_name == 'Alexs-MacBook-Pro.local':
+        os.chdir("/Users/alexsutherland/Documents/Programming/Python/Kaggle/Titanic---2015")
+    else:    
+        os.chdir('C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015')
     
     get_ipython().magic(u'matplotlib inline')
     import matplotlib.pyplot as plt
@@ -47,8 +51,17 @@ def __init__(self):
 
     
 def getData():
+    #Get computer name
     import os
-    os.chdir('C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015')
+    import socket
+    computer_name = socket.gethostname()
+    if computer_name == 'Alexs-MacBook-Pro.local':
+        base_path = "/Users/alexsutherland/Documents/Programming/Python/Kaggle/Titanic---2015"
+    else:    
+        base_path = 'C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015'
+    
+    
+    os.chdir(base_path)
     #Training Data 
     import pandas as pd
     titanic_data_v5 = pd.read_csv('Data/titanic_data_v5.csv')

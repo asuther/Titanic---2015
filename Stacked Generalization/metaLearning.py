@@ -5,8 +5,14 @@
 import pandas as pd
 import numpy as np
 import sys
-sys.path.append("C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015")
-sys.path.append("C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015\Stacked Generalization")
+import socket
+computer_name = socket.gethostname()
+if computer_name == 'Alexs-MacBook-Pro.local':
+    base_path = "/Users/alexsutherland/Documents/Programming/Python/Kaggle/Titanic---2015"
+else:    
+    base_path = 'C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015'
+sys.path.append(base_path)
+sys.path.append(base_path + "\Stacked Generalization")
 import TitanicPreprocessor as tp
 import TitanicPredictor as tpred
 import sklearn.cross_validation as skl_cv
@@ -39,3 +45,74 @@ class metaLearning():
             self.model_list.append(str(clf))
             models_added+=1
         print models_added, 'models added'
+        
+    def generateExampleModels(self):
+        import sklearn.ensemble as skl_ensemble
+        import sklearn.linear_model as skl_lm
+        import sklearn.grid_search as skl_gs
+        import sklearn.cross_validation as skl_cv
+
+
+        # ## Random Forest
+        rf_clf = skl_ensemble.RandomForestClassifier()
+
+        param_grid = [
+            {'n_estimators': [10,100, 1000], 'criterion':['gini','entropy'], 'max_depth':[None,1,2,4,6,8,10], 'max_features':[1,2,4] }
+            ]
+
+        rf_param_grid = skl_gs.ParameterGrid(param_grid = param_grid)
+
+        self.generateModelPredictions(rf_clf, rf_param_grid)
+
+        # ## Logistic Regression
+
+        lr_clf = skl_lm.LogisticRegression()
+
+        param_grid = [
+            {'penalty':['l1','l2'], 'C':np.logspace(-10,10,num=50), 'solver': ['liblinear'] }
+            ]
+
+        lr_param_grid = skl_gs.ParameterGrid(param_grid = param_grid)
+
+        meta_learn.generateModelPredictions(lr_clf, lr_param_grid)
+
+
+        # ## AdaBoost with DT stumps
+
+        # In[7]:
+
+        import sklearn.tree as skl_tree
+
+
+        # In[10]:
+
+        dt_stump_clf = skl_tree.DecisionTreeClassifier(max_depth=1)
+        ada_dt_stump_clf = skl_ensemble.AdaBoostClassifier(base_estimator=dt_stump_clf)
+
+        param_grid = [
+            {'n_estimators':[50, 100, 500, 1000], 'learning_rate':[0.001, 0.1, 1.0] }
+            ]
+
+        ada_dt_stump_param_grid = skl_gs.ParameterGrid(param_grid = param_grid)
+
+        meta_learn.generateModelPredictions(ada_dt_stump_clf, ada_dt_stump_param_grid)
+
+
+        # In[11]:
+
+        len(meta_learn.model_list)
+
+
+        # ## Random Subspace Method with kNN
+
+        # In[14]:
+
+        import sklearn.neighbors as skl_neighbors
+
+
+        # In[ ]:
+
+        skl_ensemble.BaggingClassifier(skl_neighbors.)
+
+
+    ...    
