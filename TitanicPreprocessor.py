@@ -5,7 +5,7 @@ import numpy as np
 def __init__(self):
     import socket
     computer_name = socket.gethostname()
-    if computer_name == 'Alexs-MacBook-Pro.local':
+    if computer_name == 'Alexs-MacBook-Pro.local' or computer_name == 'Alexs-MBP':
         os.chdir("/Users/alexsutherland/Documents/Programming/Python/Kaggle/Titanic---2015")
     else:    
         os.chdir('C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015')
@@ -55,7 +55,7 @@ def getData():
     import os
     import socket
     computer_name = socket.gethostname()
-    if computer_name == 'Alexs-MacBook-Pro.local':
+    if computer_name == 'Alexs-MacBook-Pro.local' or computer_name == 'Alexs-MBP':
         base_path = "/Users/alexsutherland/Documents/Programming/Python/Kaggle/Titanic---2015"
     else:    
         base_path = 'C:\Users\Lundi\Documents\Programming\Python\Kaggle\Titanic - 2015'
